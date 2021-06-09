@@ -35,7 +35,7 @@ def get_version():
 
 setup(
     name="fvcore",
-    version=get_version(),
+    version="0.1.4", # get_version(),
     author="FAIR",
     license="Apache 2.0",
     url="https://github.com/facebookresearch/fvcore",
