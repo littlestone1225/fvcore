@@ -19,7 +19,6 @@ def split_targets(
     split_target[row, col] = 1
     return split_target
 '''
-print_log = False
 
 def sigmoid_focal_loss(
     inputs: torch.Tensor,
@@ -28,6 +27,7 @@ def sigmoid_focal_loss(
     gamma: float = 2,
     reduction: str = "none",
 ) -> torch.Tensor:
+    # print_log = False
     """
     Loss used in RetinaNet for dense detection: https://arxiv.org/abs/1708.02002.
     Args:
@@ -47,13 +47,14 @@ def sigmoid_focal_loss(
     Returns:
         Loss tensor with the reduction option applied.
     """
+    '''
     if print_log:
         num = 5
         idx = torch.zeros(2, dtype=torch.int)
         nonzero_idx = torch.nonzero(targets)
         print(" = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ")
         print("fg = {} ; bg = {} ; total = {}".format(nonzero_idx.size(0), targets.size(0)-nonzero_idx.size(0), targets.size(0)))
-
+    '''
     p = torch.sigmoid(inputs)
     ce_loss = F.binary_cross_entropy_with_logits(inputs, targets, reduction="none")
     p_t = p * targets + (1 - p) * (1 - targets)
@@ -79,6 +80,7 @@ def sigmoid_focal_loss(
         # alpha_t = 1.5 * target_bridge + 2.0 * target_empty + 0.6 * target_other + 0.5 * (1 - targets) # v6_14
         loss = alpha_t * loss
 
+    '''
     if print_log and nonzero_idx.size(0) > 0:
         if nonzero_idx.size(0) < num:
             num = nonzero_idx.size(0)
@@ -89,17 +91,20 @@ def sigmoid_focal_loss(
         print("ce_loss[idx[0]] = \n{}".format(ce_loss[idx[0]:idx[0]+num]))
         print("p_t[idx[0]] = \n{}".format(p_t[idx[0]:idx[0]+num]))
         print("loss[idx[0]] = \n{}".format(loss[idx[0]:idx[0]+num]))
+    '''
 
     if reduction == "mean":
         loss = loss.mean()
     elif reduction == "sum":
         loss = loss.sum()
 
+    '''
     if print_log and nonzero_idx.size(0) > 0:
         print("loss = {}".format(loss))
 
     if print_log:
         print(" ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ \n")
+    '''
     return loss
 
 
