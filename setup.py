@@ -35,7 +35,7 @@ def get_version():
 
 setup(
     name="fvcore",
-    version=get_version(),
+    version="0.1.4", # get_version(),
     author="FAIR",
     license="Apache 2.0",
     url="https://github.com/facebookresearch/fvcore",
@@ -50,7 +50,7 @@ setup(
         "termcolor>=1.1",
         "Pillow",
         "tabulate",
-        "iopath>=0.1.7",
+        "iopath==0.1.8",
         "dataclasses; python_version<'3.7'",
     ],
     extras_require={"all": ["shapely"]},
